@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Task
 import Time
 
@@ -28,7 +29,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model Time.utc (Time.millisToPosix 0), Task.perform Zone Time.here )
+    ( Model Time.utc (Time.millisToPosix 1548997249991), Task.perform Zone Time.here )
 
 
 
@@ -54,6 +55,217 @@ update msg model =
 -- VIEW
 
 
+view : Model -> Html Msg
+view model =
+    div []
+        [ div [ style "background-color" "rgba(0, 175, 80, 0.3)" ]
+            [ h2 styleHeading [ text (currentMonth model ++ " " ++ currentYear model) ]
+            , div
+                ([]
+                    ++ styleGrid
+                )
+                ([]
+                    ++ headDays
+                    ++ makeEmptyDays (currentEmptyDays model)
+                    ++ makeDays (currentDates model)
+                )
+            ]
+        , div [ style "background-color" "rgba(0, 80, 175, 0.3)" ]
+            [ h2 styleHeading [ text (priorMonth model ++ " " ++ priorYear model) ]
+            , div
+                ([]
+                    ++ styleGrid
+                )
+                ([]
+                    ++ headDays
+                    ++ makeEmptyDays (priorEmptyDays model)
+                    ++ makeDays (priorDates model)
+                )
+            ]
+        ]
+
+
+
+-- helper functions
+
+
+styleGrid =
+    [ style "display" "grid"
+    , style "grid-template-columns" "repeat(7,1fr)"
+    , style "gap" "1px 1px"
+    , style "font-weight" "bold"
+    ]
+
+
+styleHeading =
+    [ style "text-align" "center" ]
+
+
+oneDay : Int
+oneDay =
+    24 * 60 * 60 * 1000
+
+
+headDays : List (Html Msg)
+headDays =
+    [ p styleHeadDays [ text "Su" ]
+    , p styleHeadDays [ text "Mo" ]
+    , p styleHeadDays [ text "Tu" ]
+    , p styleHeadDays [ text "We" ]
+    , p styleHeadDays [ text "Th" ]
+    , p styleHeadDays [ text "Fr" ]
+    , p styleHeadDays [ text "Sa" ]
+    ]
+
+
+styleHeadDays =
+    [ style "text-align" "center"
+    ]
+
+
+lastDayPriorMonth : Time.Zone -> Time.Posix -> Time.Posix
+lastDayPriorMonth zone posix =
+    Time.posixToMillis posix
+        - oneDay
+        * Time.toDay zone posix
+        |> Time.millisToPosix
+
+
+firstDayCurrentMonth : Time.Zone -> Time.Posix -> Time.Posix
+firstDayCurrentMonth zone posix =
+    Time.posixToMillis posix
+        - oneDay
+        * Time.toDay zone posix
+        + oneDay
+        |> Time.millisToPosix
+
+
+someDayNextMonth : Time.Zone -> Time.Posix -> Time.Posix
+someDayNextMonth zone posix =
+    Time.posixToMillis posix
+        + oneDay
+        * 32
+        |> Time.millisToPosix
+
+
+currentEmptyDays : Model -> List Int
+currentEmptyDays model =
+    ((model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.posixToMillis
+     )
+        + oneDay
+    )
+        |> Time.millisToPosix
+        |> Time.toWeekday model.zone
+        |> calendarOffset
+        |> List.range 1
+
+
+priorEmptyDays : Model -> List Int
+priorEmptyDays model =
+    ((model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.posixToMillis
+     )
+        - ((model.now
+                |> lastDayPriorMonth model.zone
+                |> Time.toDay model.zone
+           )
+            - 1
+          )
+        * oneDay
+    )
+        |> Time.millisToPosix
+        |> Time.toWeekday model.zone
+        |> calendarOffset
+        |> List.range 1
+
+
+currentMonth : Model -> String
+currentMonth model =
+    model.now
+        |> someDayNextMonth model.zone
+        |> lastDayPriorMonth model.zone
+        |> Time.toMonth model.zone
+        |> toMonth
+
+
+priorMonth : Model -> String
+priorMonth model =
+    model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.toMonth model.zone
+        |> toMonth
+
+
+currentYear : Model -> String
+currentYear model =
+    model.now
+        |> someDayNextMonth model.zone
+        |> lastDayPriorMonth model.zone
+        |> Time.toYear model.zone
+        |> String.fromInt
+
+
+priorYear : Model -> String
+priorYear model =
+    model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.toYear model.zone
+        |> String.fromInt
+
+
+currentDates : Model -> List Int
+currentDates model =
+    model.now
+        |> someDayNextMonth model.zone
+        |> lastDayPriorMonth model.zone
+        |> Time.toDay model.zone
+        |> List.range 1
+
+
+priorDates : Model -> List Int
+priorDates model =
+    model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.toDay model.zone
+        |> List.range 1
+
+
+makeDays : List Int -> List (Html Msg)
+makeDays list =
+    list
+        |> List.map
+            (\x ->
+                div styleMakeDays
+                    [ div [] [ x |> String.fromInt |> text ]
+                    , div [ style "color" "aliceblue" ] [ "E" |> text ]
+                    , div [ style "color" "aliceblue" ] [ "M" |> text ]
+                    , div [ style "color" "aliceblue" ] [ "A" |> text ]
+                    ]
+            )
+
+
+makeEmptyDays : List Int -> List (Html Msg)
+makeEmptyDays list =
+    list
+        |> List.map (\x -> p [] [ text " " ])
+
+
+styleMakeDays =
+    [ style "display" "grid"
+    , style "grid-template-columns" "repeat(2,1fr)"
+    , style "border" "solid 1px"
+    , style "background" "lightblue"
+    , style "text-align" "center"
+    ]
+
+
+
+-- old stuff
+
+
 formatTime zone posix =
     (String.padLeft 2 '0' <| String.fromInt <| Time.toHour zone posix)
         ++ ":"
@@ -70,50 +282,106 @@ formatTime zone posix =
         ++ (String.padLeft 2 '0' <| toWeekday (Time.toWeekday zone posix))
 
 
-monthmonth zone posix =
-    toMonth (Time.toMonth zone posix)
+firstDayPriorMonth model =
+    ((model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.posixToMillis
+     )
+        - ((model.now
+                |> lastDayPriorMonth model.zone
+                |> Time.toDay model.zone
+           )
+            - 1
+          )
+        * oneDay
+    )
+        |> Time.millisToPosix
+        |> Time.toWeekday model.zone
+        |> calendarOffset
+        |> List.range 1
 
 
-yearyear zone posix =
-    String.fromInt <| Time.toYear zone posix
+lastDayPrior : Time.Zone -> Time.Posix -> Int
+lastDayPrior zone posix =
+    Time.posixToMillis posix - oneDay * Time.toDay zone posix
 
 
-view : Model -> Html Msg
-view model =
-    let
-        day =
-            String.fromInt (Time.toDay model.zone model.now)
+dateList x =
+    List.range 1 x
 
-        weekday =
-            toWeekday (Time.toWeekday model.zone model.now)
 
-        month =
-            toMonth (Time.toMonth model.zone model.now)
+firstDay : Time.Zone -> Time.Posix -> Int
+firstDay zone posix =
+    lastDayPrior zone posix + oneDay
 
-        year =
-            String.fromInt (Time.toYear model.zone model.now)
 
-        hour =
-            String.fromInt (Time.toHour model.zone model.now)
+dayList y =
+    List.range 0 31
+        |> List.map (\x -> oneDay * x + y)
 
-        minute =
-            String.fromInt (Time.toMinute model.zone model.now)
 
-        second =
-            String.fromInt (Time.toSecond model.zone model.now)
-    in
-    div []
-        [ h1 [] [ text (hour ++ ":" ++ minute ++ ":" ++ second) ]
-        , h1 [] [ text (day ++ ":" ++ weekday ++ ":" ++ month ++ ":" ++ year) ]
-        , div []
-            [ text "calendar1"
-            , h2 [] [ text (month ++ " " ++ year) ]
-            ]
-        , div []
-            [ text "calendar2"
-            , h2 [] [ text (month ++ " " ++ year) ]
-            ]
-        ]
+trim x y =
+    List.drop
+        (List.reverse y
+            |> List.head
+            |> extractNumber
+            |> Time.millisToPosix
+            |> Time.toDay x
+        )
+        (List.reverse y)
+        |> List.reverse
+        |> List.map Time.millisToPosix
+
+
+dayListPrior y z =
+    List.range 0 (y - 1)
+        |> List.map (\x -> z - oneDay * x)
+        |> List.reverse
+        |> List.map Time.millisToPosix
+
+
+extractNumber y =
+    case y of
+        Just a ->
+            a
+
+        Nothing ->
+            15
+
+
+extractWeekDay : Maybe Time.Weekday -> Time.Weekday
+extractWeekDay y =
+    case y of
+        Just a ->
+            a
+
+        Nothing ->
+            Time.Sun
+
+
+calendarOffset : Time.Weekday -> Int
+calendarOffset weekday =
+    case weekday of
+        Time.Sun ->
+            0
+
+        Time.Mon ->
+            1
+
+        Time.Tue ->
+            2
+
+        Time.Wed ->
+            3
+
+        Time.Thu ->
+            4
+
+        Time.Fri ->
+            5
+
+        Time.Sat ->
+            6
 
 
 
