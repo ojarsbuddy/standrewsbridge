@@ -11,7 +11,7 @@ Each day has 86400 seconds so our only problem will be when a leap second is int
 
 Knowing the last day of the current month and the last day of the prior month we can produce with a common function a list of all the days of each month easily with `List.range`. The last day of a month is enough for us to produce the number of the month, the name of the month and the year for that month. That is everything we need to generate visual for the calendar and the links for each day.
 # Other matters
-When I want to see the changes on I run `elm reactor` in the terminal and look at the results on `http://localhost:8000`.
+When I want to see the changes I run `elm reactor` in the terminal and look at the results on `http://localhost:8000`.
 
 Using `Debug.toString` a lot to help see what my functions produce.
 
