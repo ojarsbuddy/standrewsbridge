@@ -6,7 +6,8 @@ import Html.Attributes exposing (..)
 import Task
 import Time
 
--- hy
+-- Husker Du!
+
 main : Program () Model Msg
 main =
     Browser.element
