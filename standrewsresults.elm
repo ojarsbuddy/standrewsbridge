@@ -71,7 +71,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (currentEmptyDays model)
-                    ++ makeDays (currentYear model) (currentMonth model) (currentDates model)
+                    ++ makeDays (currentYear model) (currentNumberMonth model) (currentDates model)
                 )
             ]
         , div [ style "background-color" "rgba(0, 80, 175, 0.3)" ]
@@ -83,7 +83,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (priorEmptyDays model)
-                    ++ makeDays (priorYear model) (priorMonth model) (priorDates model)
+                    ++ makeDays (priorYear model) (priorNumberMonth model) (priorDates model)
                 )
             ]
         ]
@@ -195,12 +195,29 @@ currentMonth model =
         |> toMonth
 
 
+currentNumberMonth : Model -> String
+currentNumberMonth model =
+    model.now
+        |> someDayNextMonth model.zone
+        |> lastDayPriorMonth model.zone
+        |> Time.toMonth model.zone
+        |> toNumberMonth
+
+
 priorMonth : Model -> String
 priorMonth model =
     model.now
         |> lastDayPriorMonth model.zone
         |> Time.toMonth model.zone
         |> toMonth
+
+
+priorNumberMonth : Model -> String
+priorNumberMonth model =
+    model.now
+        |> lastDayPriorMonth model.zone
+        |> Time.toMonth model.zone
+        |> toNumberMonth
 
 
 currentYear : Model -> String
@@ -243,15 +260,20 @@ makeDays year month days =
             (\x ->
                 div styleMakeDays
                     [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
                     ]
             )
 
 
-trim2 : Int -> String
 trim2 x =
+    ("0" ++ x)
+        |> String.right 2
+
+
+trimInt2 : Int -> String
+trimInt2 x =
     ("0" ++ String.fromInt x)
         |> String.right 2
 
@@ -460,3 +482,43 @@ toMonth month =
 
         Time.Dec ->
             "Dec"
+
+
+toNumberMonth : Time.Month -> String
+toNumberMonth month =
+    case month of
+        Time.Jan ->
+            "1"
+
+        Time.Feb ->
+            "2"
+
+        Time.Mar ->
+            "3"
+
+        Time.Apr ->
+            "4"
+
+        Time.May ->
+            "5"
+
+        Time.Jun ->
+            "6"
+
+        Time.Jul ->
+            "7"
+
+        Time.Aug ->
+            "8"
+
+        Time.Sep ->
+            "9"
+
+        Time.Oct ->
+            "10"
+
+        Time.Nov ->
+            "11"
+
+        Time.Dec ->
+            "12"
