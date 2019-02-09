@@ -244,11 +244,17 @@ makeDays list =
             (\x ->
                 div styleMakeDays
                     [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ a [ href "E.htm", style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href "M.htm", style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href "A.htm", style "text-decoration" "none" ] [ "A" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
                     ]
             )
+
+
+trim2 : Int -> String
+trim2 x =
+    ("0" ++ String.fromInt x)
+        |> String.right 2
 
 
 makeEmptyDays : List Int -> List (Html Msg)
