@@ -71,7 +71,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (currentEmptyDays model)
-                    ++ makeDays (currentDates model)
+                    ++ makeDays (currentYear model) (currentMonth model) (currentDates model)
                 )
             ]
         , div [ style "background-color" "rgba(0, 80, 175, 0.3)" ]
@@ -83,7 +83,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (priorEmptyDays model)
-                    ++ makeDays (priorDates model)
+                    ++ makeDays (priorYear model) (priorMonth model) (priorDates model)
                 )
             ]
         ]
@@ -237,16 +237,15 @@ priorDates model =
         |> List.range 1
 
 
-makeDays : List Int -> List (Html Msg)
-makeDays list =
-    list
+makeDays year month days =
+    days
         |> List.map
             (\x ->
                 div styleMakeDays
                     [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href (trim2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ (year |> String.right 2) ++ month ++ trim2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
                     ]
             )
 
