@@ -294,10 +294,6 @@ styleMakeDays =
 
 
 
--- old stuff
-
-
-
 
 calendarOffset : Time.Weekday -> Int
 calendarOffset weekday =
