@@ -244,9 +244,9 @@ makeDays list =
             (\x ->
                 div styleMakeDays
                     [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ "E" |> text ]
-                    , div [ style "color" "aliceblue" ] [ "M" |> text ]
-                    , div [ style "color" "aliceblue" ] [ "A" |> text ]
+                    , div [ style "color" "aliceblue" ] [ a [ href "E.htm" ] [ "E" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href "M.htm" ] [ "M" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href "A.htm" ] [ "A" |> text ] ]
                     ]
             )
 
