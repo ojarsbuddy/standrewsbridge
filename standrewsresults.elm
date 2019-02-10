@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Main exposing (Model, Msg(..), calendarOffset, currentDates, currentEmptyDays, currentMonth, currentNumberMonth, currentYear, firstDayCurrentMonth, headDays, init, lastDayPriorMonth, main, makeDays, makeEmptyDays, oneDay, priorDates, priorEmptyDays, priorMonth, priorNumberMonth, priorYear, someDayNextMonth, styleGrid, styleHeadDays, styleHeading, styleMakeDays, toMonth, toNumberMonth, toWeekday, trim2, trimInt2, update, view)
 
 import Browser
 import Html exposing (..)
@@ -259,10 +259,10 @@ makeDays year month days =
         |> List.map
             (\x ->
                 div styleMakeDays
-                    [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+                    [ h2 [] [ x |> String.fromInt |> text ]
+                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
                     ]
             )
 
@@ -290,9 +290,8 @@ styleMakeDays =
     , style "border" "solid 1px"
     , style "background" "lightblue"
     , style "text-align" "center"
+    , style "margin" "0"
     ]
-
-
 
 
 calendarOffset : Time.Weekday -> Int

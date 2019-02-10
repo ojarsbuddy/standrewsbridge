@@ -10,6 +10,9 @@ The fundamental idea is to leverage the single piece of state mentioned above. T
 Each day has 86400 seconds so our only problem will be when a leap second is introduced. This will be ignored by this program with the idea that we will have roughly a 1/86400 chance of encountering a leap second. Good odds so keep your fingers crossed.
 
 Knowing the last day of the current month and the last day of the prior month we can produce with a common function a list of all the days of each month easily with `List.range`. The last day of a month is enough for us to produce the number of the month, the name of the month and the year for that month. That is everything we need to generate visual for the calendar and the links for each day.
+#Embedding
+From 0.18 to 0.19 embedding changed.
+
 # Other matters
 When I want to see the changes I run `elm reactor` in the terminal and look at the results on `http://localhost:8000`.
 
