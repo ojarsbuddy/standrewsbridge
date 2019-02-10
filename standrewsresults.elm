@@ -259,10 +259,10 @@ makeDays year month days =
         |> List.map
             (\x ->
                 div styleMakeDays
-                    [ h2 [] [ x |> String.fromInt |> text ]
-                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , h2 [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+                    [ div [] [ x |> String.fromInt |> text ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
                     ]
             )
 
@@ -290,7 +290,6 @@ styleMakeDays =
     , style "border" "solid 1px"
     , style "background" "lightblue"
     , style "text-align" "center"
-    , style "margin" "0"
     ]
 
 
