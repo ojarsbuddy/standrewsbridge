@@ -1,7 +1,7 @@
 # standrewsbridge
 Converting at long last a production calendar widget to Elm 0.19 from Elm 0.18.
 # Fix the calendar bug around midnight
-The planned algorithm features one piece of state: the time and date when the instance of the website starts. Deriving everything else from that one immutable state should make the responding views stable, which is not the case with the website now in the wild. So let's make sure it does not change! Perhaps that will fix the instabiilty of the website now in production. Why does the current program fail?
+The planned algorithm features one piece of state: the time and date when the instance of the website starts. Deriving everything else from that one immutable state should make the responding views stable, which is not the case with the website now in the wild. So let's make sure it does not change! Perhaps that will fix the instabilty of the website now in production. Why does the current program fail?
 # Just the current date
 Found a way to get the current date. This deserves some explanation as it is somewhat obscure. But there is not a `Maybe` in sight! You have to install the package: `elm install elm\time`. Use the functions `Time.now` and `Time.zone` wrapped in a `Task.perform` to get something useful which might resemble the record `{ now = Posix 1546098529771, zone = Zone -300 [] }`, where `now` and `zone` are named keys. In Elm 0.19 we get zone information and POSIX time information. POSIX is short for Portable Operating System Interface. 
 # The algorithm
