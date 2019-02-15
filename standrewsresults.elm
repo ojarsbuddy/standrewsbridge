@@ -71,7 +71,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (currentEmptyDays model)
-                    ++ makeDays (currentYear model) (currentNumberMonth model) (currentDates model)
+                    ++ makeDays (currentYear model) (currentNumberMonth model) (currentDates model) (currentEmptyDays model)
                 )
             ]
         , div [ style "background-color" "rgba(0, 80, 175, 0.3)" ]
@@ -83,7 +83,7 @@ view model =
                 ([]
                     ++ headDays
                     ++ makeEmptyDays (priorEmptyDays model)
-                    ++ makeDays (priorYear model) (priorNumberMonth model) (priorDates model)
+                    ++ makeDays (priorYear model) (priorNumberMonth model) (priorDates model) (priorEmptyDays model)
                 )
             ]
         ]
@@ -254,17 +254,71 @@ priorDates model =
         |> List.range 1
 
 
-makeDays year month days =
+makeDays year month days emptyDays =
     days
         |> List.map
             (\x ->
                 div styleMakeDays
-                    [ div [] [ x |> String.fromInt |> text ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
-                    , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
-                    ]
+                    (htmlMakeDays year month days emptyDays x)
             )
+
+
+htmlMakeDays year month days emptyDays x =
+    [ div [] [ x |> String.fromInt |> text ] ]
+        ++ linkMakeDays year month days emptyDays x
+
+
+linkMakeDays year month days emptyDays x =
+    case modBy 7 (x - 1 + List.length emptyDays) of
+        0 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+            ]
+
+        1 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+            ]
+
+        2 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            ]
+
+        3 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+            ]
+
+        4 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "E" |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [] [ modBy 7 x |> String.fromInt |> text ]
+            ]
+
+        5 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "M" |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "A" |> text ] ]
+            , div [] [ modBy 7 x |> String.fromInt |> text ]
+            ]
+
+        6 ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ " " |> text ] ]
+            ]
+
+        _ ->
+            [ div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ "X" |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ "X" |> text ] ]
+            , div [ style "color" "aliceblue" ] [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ "X" |> text ] ]
+            ]
 
 
 trim2 x =
