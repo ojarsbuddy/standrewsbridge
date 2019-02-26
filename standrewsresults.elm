@@ -62,8 +62,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ div [ style "background-color" "rgba(0, 175, 80, 0.3)" ]
-            [ h2 styleHeading [ text (currentMonth model ++ " " ++ currentYear model) ]
+        [ div [ backgroundCurrentMonth ]
+            [ h4 styleHeading [ text (currentMonth model ++ " " ++ currentYear model) ]
             , div
                 ([]
                     ++ styleGrid
@@ -74,8 +74,8 @@ view model =
                     ++ makeDays (currentYear model) (currentNumberMonth model) (currentDates model) (currentEmptyDays model)
                 )
             ]
-        , div [ style "background-color" "rgba(0, 80, 175, 0.3)" ]
-            [ h2 styleHeading [ text (priorMonth model ++ " " ++ priorYear model) ]
+        , div [ backgroundPriorMonth ]
+            [ h4 styleHeading [ text (priorMonth model ++ " " ++ priorYear model) ]
             , div
                 ([]
                     ++ styleGrid
@@ -91,6 +91,18 @@ view model =
 
 
 -- helper functions
+
+
+backgroundCurrentMonth =
+    style "background" "linear-gradient(to  right, burlywood, ivory, burlywood)"
+
+
+backgroundPriorMonth =
+    style "background" "linear-gradient(to  right, burlywood, ivory, burlywood, ivory, burlywood)"
+
+
+backgroundDay =
+    style "background" "linear-gradient(to bottom right, wheat, ivory)"
 
 
 styleGrid =
@@ -112,18 +124,25 @@ oneDay =
 
 headDays : List (Html Msg)
 headDays =
-    [ p styleHeadDays [ text "Su" ]
-    , p styleHeadDays [ text "Mo" ]
-    , p styleHeadDays [ text "Tu" ]
-    , p styleHeadDays [ text "We" ]
-    , p styleHeadDays [ text "Th" ]
-    , p styleHeadDays [ text "Fr" ]
-    , p styleHeadDays [ text "Sa" ]
+    [ h5 styleHeadDays [ text "Su" ]
+    , h5 styleHeadDays [ text "Mo" ]
+    , h5 styleHeadDays [ text "Tu" ]
+    , h5 styleHeadDays [ text "We" ]
+    , h5 styleHeadDays [ text "Th" ]
+    , h5 styleHeadDays [ text "Fr" ]
+    , h5 styleHeadDays [ text "Sa" ]
     ]
 
 
 styleHeadDays =
     [ style "text-align" "center"
+    ]
+        ++ [ backgroundDay ]
+
+
+styleFileLink =
+    [ style "color" "rgb(131, 42, 62)"
+    , style "opacity" "0.4"
     ]
 
 
@@ -266,52 +285,52 @@ makeDays year month days emptyDays =
 htmlMakeDays year month days emptyDays x =
     case modBy 7 (x - 1 + List.length emptyDays) of
         0 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "A" |> text ] ]
             ]
 
         1 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "A" |> text ] ]
             ]
 
         2 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "A" |> text ] ]
             ]
 
         3 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "A" |> text ] ]
             ]
 
         4 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "E.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "A" |> text ] ]
             ]
 
         5 ->
-            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "E" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ h6 [] [ "M" |> text ] ]
-            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 [] [ "A" |> text ] ]
+            [ a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "E" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "M.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "M" |> text ] ]
+            , a [ href ("staresults/" ++ year ++ ".all/sta" ++ trim2 year ++ trim2 month ++ trimInt2 x ++ "A.htm"), style "text-decoration" "none" ] [ h6 styleFileLink [ "A" |> text ] ]
             ]
 
         6 ->
-            [ a [ href (""), style "text-decoration" "none" ] [ h6[][String.fromInt x |> text] ]
-            , a [ href (""), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "E" |> text ] ]
-            , a [ href (""), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "M" |> text ] ]
-            , a [ href (""), style "text-decoration" "none" ] [ h6 [ hideLink ] [ "A" |> text ] ]
+            [ a [ href "", style "text-decoration" "none" ] [ h6 [] [ String.fromInt x |> text ] ]
+            , a [ href "", style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "E" |> text ] ]
+            , a [ href "", style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "M" |> text ] ]
+            , a [ href "", style "text-decoration" "none" ] [ h6 (styleFileLink ++ hideLink) [ "A" |> text ] ]
             ]
 
         _ ->
@@ -323,7 +342,7 @@ htmlMakeDays year month days emptyDays x =
 
 
 hideLink =
-    style "visibility" "hidden"
+    [ style "visibility" "hidden" ]
 
 
 trim2 x =
@@ -346,8 +365,7 @@ makeEmptyDays list =
 styleMakeDays =
     [ style "display" "grid"
     , style "grid-template-columns" "repeat(2,1fr)"
-    , style "border" "solid 1px"
-    , style "background" "lightblue"
+    , style "background" "linear-gradient(to bottom right, wheat, ivory)"
     , style "text-align" "center"
     ]
 
