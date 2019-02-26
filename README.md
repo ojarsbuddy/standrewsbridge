@@ -16,6 +16,16 @@ Knowing the last day of the current month and the last day of the prior month we
 To vary format by the day we had used the time functions in Elm 0.18 but here we will use the offset and the day modulo 7 to trigger format changes.
 # Embedding
 From 0.18 to 0.19 embedding changed. See `https://guide.elm-lang.org/interop/`.
+'''
+            <!-- elm-lang -->
+            <div id="newstandrewscalendar19" style="display:grid"></div>
+            <script type="text/javascript" src="js/newstandrewscalendar19.js"></script>
+            <script>
+            var app = Elm.Main.init({
+                node: document.getElementById('newstandrewscalendar19')
+            });
+            </script>
+'''
 # Other matters
 When I want to see the changes I run `elm reactor` in the terminal and look at the results on `http://localhost:8000`.
 
