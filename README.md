@@ -45,4 +45,4 @@ When I want to see the changes I run `elm reactor` in the terminal and look at t
 
 Here is how the javascript module is created: `elm make src/standrewsresults.elm --output=newstandrewscalendar19.js`.
 
-Using `Debug.toString` a lot to help see what my functions produce, e.g., `div [] [ model |> Debug.toString |> text ]`.
+Using `Debug.toString` a lot to help see what my functions produce, _e.g._, `div [] [ model |> Debug.toString |> text ]`.
