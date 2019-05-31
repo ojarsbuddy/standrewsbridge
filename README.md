@@ -8,7 +8,7 @@ Converting at long last a production calendar widget to Elm 0.19 from Elm 0.18.
 
 The planned algorithm features one piece of state: the time and date when the instance of the website starts. Deriving everything else from that one immutable state should make the responding views stable, which is not the case with the website now in the wild. So let's make sure it does not change! Perhaps that will fix the instability of the website now in production.
 
-Why does the current program fail?
+Why does the current program fail? The bug has happened again. Time for some serious debugging.
 
 # Just the current date
 
@@ -44,4 +44,5 @@ From 0.18 to 0.19 embedding changed. See `https://guide.elm-lang.org/interop/`.
 When I want to see the changes I run `elm reactor` in the terminal and look at the results on `http://localhost:8000`.
 
 Here is how the javascript module is created: `elm make src/standrewsresults.elm --output=newstandrewscalendar19.js`.
-Using `Debug.toString` a lot to help see what my functions produce.
+
+Using `Debug.toString` a lot to help see what my functions produce, e.g., `div [] [ model |> Debug.toString |> text ]`.
