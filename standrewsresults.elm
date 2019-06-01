@@ -166,7 +166,7 @@ firstDayCurrentMonth zone posix =
 someDayNextMonth : Time.Zone -> Time.Posix -> Time.Posix
 someDayNextMonth zone posix =
     (Time.posixToMillis posix
-        + (oneDay * 28)
+        + (oneDay * 32)
     )
         |> Time.millisToPosix
 
