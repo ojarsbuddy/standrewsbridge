@@ -161,6 +161,7 @@ firstDayCurrentMonth zone posix =
         + oneDay
         |> Time.millisToPosix
 
+-- this offset calculation takes care of the month end bug, where calendars do not form up properly
 
 someDayNextMonth : Time.Zone -> Time.Posix -> Time.Posix
 someDayNextMonth zone posix =
