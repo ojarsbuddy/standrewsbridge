@@ -58,11 +58,10 @@ update msg model =
 
 -- VIEW
 
-
 view : Model -> Html Msg
 view model =
     div []
-        [ div [ backgroundCurrentMonth ]
+        [  div [ backgroundCurrentMonth ]
             [ h4 styleHeading [ text (currentMonth model ++ " " ++ currentYear model) ]
             , div
                 ([]
@@ -166,7 +165,7 @@ firstDayCurrentMonth zone posix =
 someDayNextMonth : Time.Zone -> Time.Posix -> Time.Posix
 someDayNextMonth zone posix =
     (Time.posixToMillis posix
-        + (oneDay * 32)
+        + (oneDay * (35 - (Time.toDay zone posix)))
     )
         |> Time.millisToPosix
 
