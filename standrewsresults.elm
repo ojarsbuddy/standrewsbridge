@@ -61,7 +61,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [  div [ backgroundCurrentMonth ]
+        [ div [ backgroundCurrentMonth ]
             [ h4 styleHeading [ text (currentMonth model ++ " " ++ currentYear model) ]
             , div
                 ([]
