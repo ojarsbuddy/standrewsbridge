@@ -8,7 +8,7 @@ Converting at long last a production calendar widget to Elm 0.19 from Elm 0.18.
 
 The planned algorithm features one piece of state: the time and date when the instance of the website starts. Deriving everything else from that one immutable state should make the responding views stable, which is not the case with the website now in the wild. So let's make sure it does not change! Perhaps that will fix the instability of the website now in production.
 
-Why does the current program fail? The bug has happened again. Time for some serious debugging in Pharo.
+Why does the current program fail? The bug has happened again. Time for some serious debugging in Pharo. The offset calculation was incorrect for all cases. The solution is embodied in the second line of the code below. Pharo is very easy to use.
 
 ```pharo
 aDayThisMonth := Date year: 2019 month: 5 day: 30 .
