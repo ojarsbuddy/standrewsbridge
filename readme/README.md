@@ -10,7 +10,7 @@ The planned algorithm features one piece of state: the time and date when the in
 
 Why does the current program fail? The bug has happened again. Time for some serious debugging in Pharo. The offset calculation was incorrect for all cases. The solution is embodied in the second line of the code below. Pharo is very easy to use.
 
-```pharo
+```smalltalk
 aDayThisMonth := Date year: 2019 month: 5 day: 30 .
 offset := 35-(aDayThisMonth dayOfMonth).
 aDayNextMonth := aDayThisMonth addDays: offset.
@@ -37,7 +37,7 @@ Transcript clear ;
 
 ```
 
-```pharo
+```smalltalk
 Get the date for today
 30 May 2019
 
