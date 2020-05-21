@@ -1,0 +1,139 @@
+:root {
+  --stred: rgb(131, 42, 62);
+
+  --stgold: rgb(210, 140, 0);
+
+  --stblack: rgb(0, 0, 0);
+
+  --stsilver: rgb(112, 128, 144);
+
+  --stnorm: #5c4b26;
+
+  --sth1: #7e3441;
+
+  --sth2: #9b6a01;
+
+  --sth3: var(-stnorm);
+
+  --sth4: #af7a1f;
+
+  --sth5: var(--stblack);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  background-color: ivory;
+  margin: 0;
+}
+hr {
+  border: none;
+  border-bottom: 0.2rem double var(--stnorm);
+  color: var(--stnorm);
+  overflow: visible;
+  text-align: center;
+  height: 0.25rem;
+  content: "§";
+  margin: 0.5rem 0;
+}
+hr:after {
+  background: ivory;
+  content: "§";
+  padding: 0 0.25rem;
+  position: relative;
+  top: -0.5rem;
+}
+img {
+  width: 100%;
+}
+
+header {
+  text-transform: capitalize;
+  padding: 1rem 0;
+}
+
+header img {
+  width: 25vw;
+}
+section {
+  outline: 2px solid red;
+}
+ul {
+  padding-bottom: 1rem;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.column a:link {
+  text-decoration: none;
+  color: var(--stgold);
+}
+.column a:visited {
+  text-decoration: none;
+  color: var(--stnorm);
+}
+.column a:hover {
+  text-decoration: none;
+  color: var(--stred);
+}
+.column a:active {
+  text-decoration: none;
+  color: var(--stblack);
+}
+.container {
+  width: 92%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.partnerships {
+  outline: 0.25rem solid var(--stgold);
+  outline-offset: -0.25rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.row-images {
+  display: flex;
+  justify-content: center;
+}
+.row-images img {
+  margin-bottom: 0.5rem;
+}
+.row-images div + div {
+  margin-left: 0.5rem;
+}
+
+footer {
+  background-color: var(--stred);
+  color: white;
+}
+footer p {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+@media (min-width: 600px) {
+  header img {
+    width: 20vw;
+  }
+  .bbo-wide {
+    display: flex;
+  }
+  .bbo-wide-images > div + div {
+    margin-left: 2rem;
+  }
+  .row-images-half img {
+    width: 50%;
+  }
+}
+@media (min-width: 1000px) {
+  header img {
+    width: 15vw;
+  }
+}
