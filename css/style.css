@@ -114,6 +114,7 @@ ul {
 footer {
   background-color: var(--stred);
   color: white;
+  font-weight: bold;
 }
 footer p {
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
