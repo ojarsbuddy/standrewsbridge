@@ -27,6 +27,7 @@
       </h1>
     </header>
     <!-- end of header -->
+
     <!-- start of bbo section -->
     <section class="container">
       <div class="column">
@@ -66,18 +67,25 @@
         <div>
           <h4>Upcoming Special Events</h4>
           <ul>
-            <li>May 27th Wednesday afternoon</li>
+            <li style="margin-bottom: 1rem;">
+              <a href="https://www.acbl.org/clubsupportonlinegames/"
+                >Introducing Silver Linings Week:</a
+              >
+              Behind Every Board are Silver Points Tripled! From May 25-31
+              (Monday-Sunday), members will be able to earn Silver Silver Silver
+              points in our Virtual Club games.
+            </li>
+            <li>
+              Upcoming Silver Point Games Monday June 15 through Sunday June 21
+            </li>
             <li>
               July 13th Monday Afternoon ACBL Instant Matchpoint Tournament
             </li>
+            <li>
+              Upcoming Silver Point Games Monday August 17 through Sunday August
+              23
+            </li>
             <li>August 24th Monday Afternoon ACBL Junior Fund Game</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Upcoming Silver Point Games</h4>
-          <ul>
-            <li>Monday June 15 through Sunday June 21</li>
-            <li>Monday August 17 through Sunday August 23</li>
           </ul>
         </div>
       </div>
@@ -172,6 +180,19 @@
     <!-- start of standard section -->
     <section class="container">
       <div>
+        <h5>Upcoming Silver Point Games</h5>
+        <ul>
+          <li>
+            <a href="http://tournaments.acbl.org/schedule.php?sanction=2008509"
+              >STaC District 9 Aug. 17&ndash;23, 2020</a
+            >
+          </li>
+          <li>
+            <a href="http://tournaments.acbl.org/schedule.php?sanction=2012508"
+              >STaC U128 (D9) Dec. 7&ndash;13, 2020</a
+            >
+          </li>
+        </ul>
         <div class="partnerships">
           <p>
             <strong>Bonnie J. Rosen</strong><br />
@@ -190,22 +211,6 @@
             class="item-image"
           />
         </div>
-        <h5>Upcoming Silver Point Games</h5>
-        <li>
-          <a href="http://tournaments.acbl.org/schedule.php?sanction=2006508"
-            >STaC Unit 128 Jun. 15&ndash;21, 2020</a
-          >
-        </li>
-        <li>
-          <a href="http://tournaments.acbl.org/schedule.php?sanction=2008509"
-            >STaC District 9 Aug. 24&ndash;30, 2020</a
-          >
-        </li>
-        <li>
-          <a href="http://tournaments.acbl.org/schedule.php?sanction=2012508"
-            >STaC U128 (D9) Dec. 7&ndash;13, 2020</a
-          >
-        </li>
         <div class="partnerships">
           <p>
             <strong>Linda Tafet</strong><br />
@@ -253,13 +258,14 @@
         <script>
           var app = Elm.Main.init({
             node: document.getElementById("newstandrewscalendar19"),
-          });
+          })
         </script>
       </div>
     </section>
     <!-- end of standard section -->
+
     <!-- start of flyers -->
-    <div class="row">
+    <div class="container row">
       <div class="row-images">
         <div>
           <a
@@ -320,7 +326,7 @@
       </div>
     </div>
     <!-- end of flyers -->
-    <div class="row bordbottom">
+    <div class="container row bordbottom">
       <!-- vue.js -->
       <script type="text/javascript" src="js/vue.min.js"></script>
       <div class="small-12 medium-6 large-6 columns">
@@ -351,24 +357,26 @@
                 "http://thecommongame.com/PHPPOSTCGS.php?options=RankStatus&acblno=",
               trailer: "&source=Saint Andrews",
             },
-          });
+          })
         </script>
       </div>
-      <!-- elm-lang -->
-      <div class="small-12 medium-6 large-6 columns">
-        <div
-          id="vacantplaces"
-          class="small-12 medium-6 large-6 columns"
-          ,
-          style="display: grid;"
-        >
-          <!-- elm-lang -->
+      <div>
+        <!-- elm-lang -->
+        <div class="small-12 medium-6 large-6 columns">
+          <div
+            id="vacantplaces"
+            class="small-12 medium-6 large-6 columns"
+            ,
+            style="display: grid;"
+          >
+            <!-- elm-lang -->
+          </div>
+          <script type="text/javascript" src="js/vacantplaces.js"></script>
+          <script>
+            var node = document.getElementById("vacantplaces")
+            var app = Elm.VacantPlaces.embed(node)
+          </script>
         </div>
-        <script type="text/javascript" src="js/vacantplaces.js"></script>
-        <script>
-          var node = document.getElementById("vacantplaces");
-          var app = Elm.VacantPlaces.embed(node);
-        </script>
       </div>
     </div>
     <!-- end of row -->
@@ -379,7 +387,7 @@
           &copy; 2009
           <script>
             new Date().getFullYear() > 2009 &&
-              document.write("&ndash; " + new Date().getFullYear() + "  ");
+              document.write("&ndash; " + new Date().getFullYear() + "  ")
           </script>
           St. Andrews Country Club. All Rights Reserved.
         </p>
