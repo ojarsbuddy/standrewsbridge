@@ -13,7 +13,7 @@
 
   --sth2: #9b6a01;
 
-  --sth3: var(-stnorm);
+  --sth3: var(--stnorm);
 
   --sth4: #af7a1f;
 
