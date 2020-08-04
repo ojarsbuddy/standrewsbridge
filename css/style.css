@@ -1,23 +1,26 @@
 :root {
+  --acblprimarywhite: rgb(255, 255, 255);
+  --acblprimaryblue: rgb(255, 255, 255);
+  --acblprimaryblack: rgb(0, 0, 0);
+  --acblsecondarygold: rgb(251, 204, 69);
+  --acblsecondaryltgreen: rgb(251, 204, 69);
+  --acblsecondarygold: rgb(141, 198, 63);
+  --acblsecondarygray: rgb(113, 112, 115);
+  --acblsecondarydkgreen: rgb(67, 149, 57);
+  --acblsecondaryorange: rgb(245, 128, 37);
+  --acblsecondaryblue: rgb(0, 157, 220);
+
   --stred: rgb(131, 42, 62);
-
   --stgold: rgb(210, 140, 0);
-
-  --stblack: rgb(0, 0, 0);
-
+  --stblack: var(--acblprimaryblack);
   --stsilver: rgb(112, 128, 144);
 
   --stnorm: #5c4b26;
-
   --sth1: #7e3441;
-
   --sth2: #9b6a01;
-
   --sth3: var(--stnorm);
-
   --sth4: #af7a1f;
-
-  --sth5: var(--stblack);
+  --sth5: var(--acblprimaryblack);
 }
 *,
 *::before,
